@@ -12,11 +12,25 @@ import VideoListEntry from './VideoListEntry.js';
 
 var VideoList = (props) => (
   <div className="video-list">
-    {props.videos.map(video =>
-      <VideoListEntry video={video} />
+    {props.videos.map((video, index) =>
+      <VideoListEntry onClick={(event) => props.handleClick(event)} key={video.id.videoId} video={video} />
     )}
   </div>
 );
+
+// function NumberList(props) {
+// const numbers = props.numbers;
+// return (
+//   <ul>
+//     {numbers.map((number) =>
+//       <ListItem key={number.toString()}
+//                 value={number} />
+//     )}
+//   </ul>
+// );
+// }
+
+
 // {/* <Videos video={['someVideo', 'anotherVideo', 'videoThree', 'videoFour', 'videoFive']} /> */}
 
 // class VideoEntries extends React.Component {
