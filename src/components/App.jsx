@@ -1,6 +1,7 @@
 import exampleVideoData from '../data/exampleVideoData.js';
 import VideoList from './VideoList.js';
 import VideoPlayer from './VideoPlayer.js';
+import searchYouTube from '../lib/searchYouTube.js';
 // console.log(exampleVideoData);
 
 // var App = () => (
@@ -25,22 +26,32 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      clicked: false,
-      // currentVideoPlayer: {this.props},
-      // videosInList: {this.props....}
+      videoPlaying: null,
+      videosInList: [],
+      isLoading: true
     };
-    // this.onVideoClick = this.onVideoClick.bind(this)
+    this.onVideoClick = this.onVideoClick.bind(this);
+    this.getVideos.bind(this);
+    this.getVideos('zeducation');
   }
 
 
 
-  onVideoClick(event) {
-    // event.preventDefault
-    console.log(event);
+  onVideoClick(video) {
+    console.log('here');
     this.setState({
-      clicked: !this.state.clicked,
-      // currentVideoPlayer:'',
+      videoPlaying: video
     });
+  }
+
+  getVideos(searchTerm) {
+    searchYouTube(searchTerm, (videos) =>
+      this.setState({
+        videoPlaying: videos[0],
+        isLoading: false,
+        videosInList: videos
+      })
+    );
   }
 
   render() {
@@ -53,10 +64,10 @@ class App extends React.Component {
         </nav>
         <div className="row">
           <div className="col-md-7">
-            <div><VideoPlayer video={exampleVideoData[0]}/></div>
+            <div><VideoPlayer video={this.state.videoPlaying}/></div>
           </div>
           <div className="col-md-5">
-            <VideoList handleClick={this.onVideoClick} videos={exampleVideoData} />
+            <VideoList onVideoClick={this.onVideoClick} videos={this.state.videosInList} />
           </div>
         </div>
       </div>
