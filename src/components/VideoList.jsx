@@ -10,25 +10,13 @@ import VideoListEntry from './VideoListEntry.js';
 //   </div>
 // );
 
-var VideoList = (props) => (
+var VideoList = (props, onVideoClick) => (
   <div className="video-list">
-    {props.videos.map((video, index) =>
-      <VideoListEntry onClick={(event) => props.handleClick(event)} key={video.id.videoId} video={video} />
+    {props.videos.map((video) =>
+      <VideoListEntry onVideoClick={props.onVideoClick} key={video.id.videoId} video={video} />
     )}
   </div>
 );
-
-// function NumberList(props) {
-// const numbers = props.numbers;
-// return (
-//   <ul>
-//     {numbers.map((number) =>
-//       <ListItem key={number.toString()}
-//                 value={number} />
-//     )}
-//   </ul>
-// );
-// }
 
 
 // {/* <Videos video={['someVideo', 'anotherVideo', 'videoThree', 'videoFour', 'videoFive']} /> */}
